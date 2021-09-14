@@ -24,12 +24,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.exifinterface.media.ExifInterface;
 
 import static expo.modules.medialibrary.MediaLibraryConstants.ASSET_PROJECTION;
@@ -204,7 +207,13 @@ final class MediaLibraryUtils {
       if (fullInfo) {
         if (exifInterface != null) {
           getExifFullInfo(exifInterface, asset);
-          getExifLocation(exifInterface, asset);
+
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Uri photoUri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cursor.getString(idIndex));
+            getExifLocationForUri(contentResolver, photoUri, asset);
+          } else {
+            getExifLocation(exifInterface, asset);
+          }
         }
 
         asset.putString("localUri", localUri);
@@ -363,8 +372,40 @@ final class MediaLibraryUtils {
     response.putParcelable("exif", exifMap);
   }
 
+  //  reference: https://developer.android.com/training/data-storage/shared/media#location-info-photos
+  @RequiresApi(api = Build.VERSION_CODES.Q)
+  static void getExifLocationForUri(ContentResolver contentResolver, Uri photoUri, Bundle asset) throws IOException {
+    // Get location data using the ExifInterface library.
+    // Exception occurs if ACCESS_MEDIA_LOCATION permission isn't granted.
+    photoUri = MediaStore.setRequireOriginal(photoUri);
+    InputStream stream = contentResolver.openInputStream(photoUri);
+    if (stream != null) {
+      ExifInterface exifInterface = new ExifInterface(stream);
+      double[] latLong = exifInterface.getLatLong();
+
+      if (latLong == null) {
+        asset.putParcelable("location", null);
+        // Don't reuse the stream associated with
+        // the instance of "ExifInterface".
+        stream.close();
+        return;
+      }
+
+      Bundle location = new Bundle();
+      location.putDouble("latitude", latLong[0]);
+      location.putDouble("longitude", latLong[1]);
+      asset.putParcelable("location", location);
+
+      // Don't reuse the stream associated with
+      // the instance of "ExifInterface".
+      stream.close();
+    }
+  }
+
   static void getExifLocation(ExifInterface exifInterface, Bundle asset) {
+
     double[] latLong = exifInterface.getLatLong();
+
     if (latLong == null) {
       asset.putParcelable("location", null);
       return;
