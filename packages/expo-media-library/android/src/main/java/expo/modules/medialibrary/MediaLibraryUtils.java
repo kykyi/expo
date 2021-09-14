@@ -158,11 +158,11 @@ final class MediaLibraryUtils {
       promise.reject(ERROR_UNABLE_TO_LOAD_PERMISSION,
         "Could not get asset: need READ_EXTERNAL_STORAGE permission.", e);
     } catch (IOException e) {
-      promise.reject(ERROR_IO_EXCEPTION, "Could not read file", e);
+      promise.reject(ERROR_IO_EXCEPTION, "Could not read file or parse EXIF tags", e);
     }
   }
 
-  static void putAssetsInfo(ContentResolver contentResolver, Cursor cursor, ArrayList<Bundle> response, int limit, int offset, boolean fullInfo) throws IOException {
+  static void putAssetsInfo(ContentResolver contentResolver, Cursor cursor, ArrayList<Bundle> response, int limit, int offset, boolean fullInfo) throws Exception {
     final int idIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
     final int filenameIndex = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
     final int mediaTypeIndex = cursor.getColumnIndex(Files.FileColumns.MEDIA_TYPE);
@@ -374,7 +374,7 @@ final class MediaLibraryUtils {
 
   //  reference: https://developer.android.com/training/data-storage/shared/media#location-info-photos
   @RequiresApi(api = Build.VERSION_CODES.Q)
-  static void getExifLocationForUri(ContentResolver contentResolver, Uri photoUri, Bundle asset) throws IOException {
+  static void getExifLocationForUri(ContentResolver contentResolver, Uri photoUri, Bundle asset) throws Exception {
     // Get location data using the ExifInterface library.
     // Exception occurs if ACCESS_MEDIA_LOCATION permission isn't granted.
     photoUri = MediaStore.setRequireOriginal(photoUri);
