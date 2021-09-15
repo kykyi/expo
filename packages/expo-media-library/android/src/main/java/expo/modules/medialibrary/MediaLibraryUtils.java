@@ -162,7 +162,7 @@ final class MediaLibraryUtils {
     }
   }
 
-  static void putAssetsInfo(ContentResolver contentResolver, Cursor cursor, ArrayList<Bundle> response, int limit, int offset, boolean fullInfo) throws Exception {
+  static void putAssetsInfo(ContentResolver contentResolver, Cursor cursor, ArrayList<Bundle> response, int limit, int offset, boolean fullInfo) throws IOException {
     final int idIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
     final int filenameIndex = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
     final int mediaTypeIndex = cursor.getColumnIndex(Files.FileColumns.MEDIA_TYPE);
@@ -206,17 +206,15 @@ final class MediaLibraryUtils {
 
       if (fullInfo) {
         if (exifInterface != null) {
-          getExifFullInfo(exifInterface, asset);
-
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Uri photoUri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cursor.getString(idIndex));
             getExifLocationForUri(contentResolver, photoUri, asset);
           } else {
+            getExifFullInfo(exifInterface, asset);
             getExifLocation(exifInterface, asset);
           }
+          asset.putString("localUri", localUri);
         }
-
-        asset.putString("localUri", localUri);
       }
       cursor.moveToNext();
       response.add(asset);
@@ -372,33 +370,31 @@ final class MediaLibraryUtils {
     response.putParcelable("exif", exifMap);
   }
 
-  //  reference: https://developer.android.com/training/data-storage/shared/media#location-info-photos
+  // API 29+ adds "scoped storage" which requires extra permissions (ACCESS_MEDIA_LOCATION) to access photo data
+  // Reference: https://developer.android.com/training/data-storage/shared/media#location-info-photos
   @RequiresApi(api = Build.VERSION_CODES.Q)
-  static void getExifLocationForUri(ContentResolver contentResolver, Uri photoUri, Bundle asset) throws Exception {
-    // Get location data using the ExifInterface library.
-    // Exception occurs if ACCESS_MEDIA_LOCATION permission isn't granted.
+  static void getExifLocationForUri(ContentResolver contentResolver, Uri photoUri, Bundle asset) throws FileNotFoundException {
     photoUri = MediaStore.setRequireOriginal(photoUri);
+    // Exception occurs if ACCESS_MEDIA_LOCATION permission isn't granted
     InputStream stream = contentResolver.openInputStream(photoUri);
     if (stream != null) {
-      ExifInterface exifInterface = new ExifInterface(stream);
-      double[] latLong = exifInterface.getLatLong();
+      try {
+        // If exif data cannot be found on the stream, set location to null instead of rejecting
+        ExifInterface exifInterface = new ExifInterface(stream);
+        double[] latLong = exifInterface.getLatLong();
 
-      if (latLong == null) {
-        asset.putParcelable("location", null);
-        // Don't reuse the stream associated with
-        // the instance of "ExifInterface".
+        if (latLong != null) {
+          Bundle location = new Bundle();
+          location.putDouble("latitude", latLong[0]);
+          location.putDouble("longitude", latLong[1]);
+          asset.putParcelable("location", location);
+        } else {
+          asset.putParcelable("location", null);
+        }
         stream.close();
-        return;
+      } catch(IOException e) {
+        asset.putParcelable("location", null);
       }
-
-      Bundle location = new Bundle();
-      location.putDouble("latitude", latLong[0]);
-      location.putDouble("longitude", latLong[1]);
-      asset.putParcelable("location", location);
-
-      // Don't reuse the stream associated with
-      // the instance of "ExifInterface".
-      stream.close();
     }
   }
 

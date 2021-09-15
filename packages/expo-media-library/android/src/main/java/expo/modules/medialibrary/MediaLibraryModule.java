@@ -459,7 +459,7 @@ public class MediaLibraryModule extends ExportedModule implements ActivityEventL
     return new String[]{
       READ_EXTERNAL_STORAGE,
       WRITE_EXTERNAL_STORAGE,
-            ACCESS_MEDIA_LOCATION,
+      ACCESS_MEDIA_LOCATION,
     };
   }
 
