@@ -38,6 +38,7 @@ import androidx.exifinterface.media.ExifInterface;
 import static expo.modules.medialibrary.MediaLibraryConstants.ASSET_PROJECTION;
 import static expo.modules.medialibrary.MediaLibraryConstants.ERROR_IO_EXCEPTION;
 import static expo.modules.medialibrary.MediaLibraryConstants.ERROR_NO_ASSET;
+import static expo.modules.medialibrary.MediaLibraryConstants.ERROR_NO_PERMISSIONS;
 import static expo.modules.medialibrary.MediaLibraryConstants.ERROR_UNABLE_TO_DELETE;
 import static expo.modules.medialibrary.MediaLibraryConstants.ERROR_UNABLE_TO_LOAD;
 import static expo.modules.medialibrary.MediaLibraryConstants.ERROR_UNABLE_TO_LOAD_PERMISSION;
@@ -158,11 +159,14 @@ final class MediaLibraryUtils {
       promise.reject(ERROR_UNABLE_TO_LOAD_PERMISSION,
         "Could not get asset: need READ_EXTERNAL_STORAGE permission.", e);
     } catch (IOException e) {
-      promise.reject(ERROR_IO_EXCEPTION, "Could not read file or parse EXIF tags", e);
+      promise.reject(ERROR_IO_EXCEPTION, "Could not read file", e);
+    } catch (UnsupportedOperationException e)  {
+      e.printStackTrace();
+      promise.reject(ERROR_NO_PERMISSIONS, e.getMessage());
     }
   }
 
-  static void putAssetsInfo(ContentResolver contentResolver, Cursor cursor, ArrayList<Bundle> response, int limit, int offset, boolean fullInfo) throws IOException {
+  static void putAssetsInfo(ContentResolver contentResolver, Cursor cursor, ArrayList<Bundle> response, int limit, int offset, boolean fullInfo) throws IOException, UnsupportedOperationException {
     final int idIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
     final int filenameIndex = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
     final int mediaTypeIndex = cursor.getColumnIndex(Files.FileColumns.MEDIA_TYPE);
@@ -208,6 +212,7 @@ final class MediaLibraryUtils {
         if (exifInterface != null) {
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Uri photoUri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cursor.getString(idIndex));
+            getExifFullInfo(exifInterface, asset);
             getExifLocationForUri(contentResolver, photoUri, asset);
           } else {
             getExifFullInfo(exifInterface, asset);
@@ -373,10 +378,17 @@ final class MediaLibraryUtils {
   // API 29+ adds "scoped storage" which requires extra permissions (ACCESS_MEDIA_LOCATION) to access photo data
   // Reference: https://developer.android.com/training/data-storage/shared/media#location-info-photos
   @RequiresApi(api = Build.VERSION_CODES.Q)
-  static void getExifLocationForUri(ContentResolver contentResolver, Uri photoUri, Bundle asset) throws FileNotFoundException {
-    photoUri = MediaStore.setRequireOriginal(photoUri);
-    // Exception occurs if ACCESS_MEDIA_LOCATION permission isn't granted
-    InputStream stream = contentResolver.openInputStream(photoUri);
+  static void getExifLocationForUri(ContentResolver contentResolver, Uri photoUri, Bundle asset) throws UnsupportedOperationException, IOException {
+    InputStream stream;
+
+    try {
+      // Exception occurs if ACCESS_MEDIA_LOCATION permission isn't granted
+      photoUri = MediaStore.setRequireOriginal(photoUri);
+      stream = contentResolver.openInputStream(photoUri);
+    } catch (UnsupportedOperationException e) {
+      throw new UnsupportedOperationException("Cannot access ExifInterface because of missing ACCESS_MEDIA_LOCATION permission");
+    }
+
     if (stream != null) {
       try {
         // If exif data cannot be found on the stream, set location to null instead of rejecting
@@ -391,9 +403,10 @@ final class MediaLibraryUtils {
         } else {
           asset.putParcelable("location", null);
         }
-        stream.close();
       } catch(IOException e) {
         asset.putParcelable("location", null);
+      } finally {
+        stream.close();
       }
     }
   }

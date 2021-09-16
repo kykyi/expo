@@ -453,7 +453,8 @@ public class MediaLibraryModule extends ExportedModule implements ActivityEventL
   private String[] getManifestPermissions(boolean writeOnly) {
     if (writeOnly) {
       return new String[]{
-        WRITE_EXTERNAL_STORAGE, ACCESS_MEDIA_LOCATION
+        WRITE_EXTERNAL_STORAGE,
+        ACCESS_MEDIA_LOCATION
       };
     }
     return new String[]{
