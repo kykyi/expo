@@ -26,6 +26,13 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
     }
   }
 
+  @ExpoMethod
+  fun setSystemUiVisibility(visibility: String) {
+    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      // TODO: Implement visibility with WindowInsets
+    }
+  }
+
   companion object {
     private val NAME = "ExpoSystemUI"
     private val TAG = SystemUIModule::class.qualifiedName
