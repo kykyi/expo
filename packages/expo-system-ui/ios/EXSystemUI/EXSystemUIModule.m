@@ -17,11 +17,10 @@ UM_EXPORT_MODULE(ExpoSystemUI);
   _moduleRegistry = moduleRegistry;
 }
 
-UM_EXPORT_METHOD_AS(someGreatMethodAsync,
-                    options:(NSDictionary *)options
-                    resolve:(UMPromiseResolveBlock)resolve
-                    reject:(UMPromiseRejectBlock)reject)
+UM_EXPORT_METHOD_AS(setNavigationBarColor,
+                    color:(UIColor *)color)
 {
+  // TODO: Implement or remove setNavigationBarColor?
 }
 
 @end

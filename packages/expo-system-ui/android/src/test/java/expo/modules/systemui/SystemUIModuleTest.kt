@@ -25,7 +25,8 @@ class SystemUIModuleTest {
   }
 
   @Test
-  fun testSomeGreatMethodAsync() {
+  fun testSetNavigationBarColor() {
+    // TODO: Test
     assertTrue(true)
   }
 

@@ -20,7 +20,10 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun someGreatMethodAsync(options: Map<String, Any>, promise: Promise) {
+  fun setNavigationBarColor(color: String) {
+    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      getWindow().setNavigationBarColor(/* TODO: Color */);
+    }
   }
 
   companion object {

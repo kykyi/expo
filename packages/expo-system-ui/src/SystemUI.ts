@@ -1,18 +1,17 @@
+import { ColorValue } from 'react-native';
+
 import ExpoSystemUI from './ExpoSystemUI';
-import { SampleOptions } from './SystemUI.types';
-
-
-export * from './SystemUI.types';
 
 /**
- * Great method that does a lot great stuff.
- * @param options specifies what great stuff you really want.
+ * Changes the Android Navigation Bar Color.
  *
  * @example
  * ```typescript
- * const result = await someGreatMethodAsync({ someOption: 'awesome' });
+ * setNavigationBarColor("white");
  * ```
  */
-export async function someGreatMethodAsync(options: SampleOptions) {
-  return await ExpoSystemUI.someGreatMethodAsync(options);
+export function setNavigationBarColor(color: ColorValue): void {
+  // TODO: Do we need to call processColor?
+  // const colorString = processColor(color)
+  return ExpoSystemUI.setNavigationBarColor(color);
 }

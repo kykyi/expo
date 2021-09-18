@@ -1,13 +1,14 @@
 import { SampleOptions } from './ModuleTemplate.types';
 export { default as ExpoModuleTemplateView, ExpoModuleTemplateViewProps } from './ExpoModuleTemplateView';
+import { ColorValue } from 'react-native'
 export * from './ModuleTemplate.types';
+
 /**
- * Great method that does a lot great stuff.
- * @param options specifies what great stuff you really want.
+ * Changes the Android Navigation Bar Color.
  *
  * @example
  * ```typescript
- * const result = await someGreatMethodAsync({ someOption: 'awesome' });
+ * setNavigationBarColor("white");
  * ```
  */
-export declare function someGreatMethodAsync(options: SampleOptions): Promise<any>;
+export declare function setNavigationBarColor(color: ColorValue): void;
