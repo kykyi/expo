@@ -1,7 +1,6 @@
-import * as Clipboard from 'expo-clipboard';
-import { setNavigationBarColor } from 'expo-system-ui';
+import { setNavigationBarColor, setSystemUiVisibility } from 'expo-system-ui';
 import * as React from 'react';
-import { Button, Text, TextInput } from 'react-native';
+import { Button, Text } from 'react-native';
 
 import { Page, Section } from '../components/Page';
 
@@ -11,11 +10,8 @@ export default function SystemUIScreen() {
       <Section title="Set Navigation Bar Color">
         <SetNavigationBarColorExample />
       </Section>
-      <Section title="Get String">
-        <GetStringExample />
-      </Section>
-      <Section title="Clipboard listener">
-        <ListenerExample />
+      <Section title="Set System UI Visibility">
+        <SetNavigationBarVisibilityExample />
       </Section>
     </Page>
   );
@@ -25,20 +21,19 @@ SystemUIScreen.navigationOptions = {
   title: 'System UI',
 };
 
-function GetStringExample() {
-  const [value, setValue] = React.useState('');
+function SetNavigationBarVisibilityExample() {
+  const [value, setValue] = React.useState<'visible' | 'hidden'>('visible');
 
   return (
     <>
-      <Text>On the clipboard: {value || 'nothing'}</Text>
+      <Text>Visibility: {value}</Text>
 
       <Button
-        onPress={async () => {
-          const value = await Clipboard.getStringAsync();
-          console.log('got clipboard:', value);
-          setValue(value);
+        onPress={() => {
+          setSystemUiVisibility(value);
+          setValue((curr) => (curr === 'visible' ? 'hidden' : 'visible'));
         }}
-        title="Get Clipboard"
+        title="Toggle Visibility"
       />
     </>
   );
@@ -62,33 +57,6 @@ function SetNavigationBarColorExample() {
         }}
         title="Set Navigation Bar to random color"
       />
-    </>
-  );
-}
-
-function ListenerExample() {
-  const clipboardListener = React.useRef<Clipboard.Subscription | null>(null);
-  const [value, setValue] = React.useState('');
-
-  React.useEffect(() => {
-    clipboardListener.current = Clipboard.addClipboardListener(
-      ({ content }: { content: string }) => {
-        setValue(content);
-      }
-    );
-
-    return () => {
-      if (clipboardListener.current) {
-        Clipboard.removeClipboardListener(clipboardListener.current);
-      }
-    };
-  }, []);
-
-  return (
-    <>
-      <Text style={{ padding: 8, height: 48, margin: 8, borderBottomWidth: 1 }}>
-        Clipboard value changed to: {value}
-      </Text>
     </>
   );
 }
