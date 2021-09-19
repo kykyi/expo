@@ -30,13 +30,16 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun setSystemUiVisibility(isVisible: Boolean) {
-    if (isVisible) {
-      activity.window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
-      activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-    } else {
-      activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-      activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+  fun setSystemUiVisibility(visibility: String) {
+    when (visibility) {
+      "visible" -> {
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+      }
+      "hidden" -> {
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+      }
     }
   }
 
