@@ -68,6 +68,12 @@ export const Screens = [
   },
   {
     getComponent() {
+      return optionalRequire(() => require('../screens/SystemUIScreen'));
+    },
+    name: 'System UI',
+  },
+  {
+    getComponent() {
       return optionalRequire(() => require('../screens/AppleAuthenticationScreen'));
     },
     name: 'AppleAuthentication',
