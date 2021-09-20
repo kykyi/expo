@@ -3,7 +3,8 @@ package expo.modules.systemui
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.view.WindowManager
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import expo.modules.core.ExportedModule
 import expo.modules.core.ModuleRegistry
 import expo.modules.core.interfaces.ExpoMethod
@@ -31,14 +32,15 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
 
   @ExpoMethod
   fun setSystemUiVisibility(visibility: String) {
-    when (visibility) {
-      "visible" -> {
-        activity.window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
-        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-      }
-      "hidden" -> {
-        activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+    WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
+      when (visibility) {
+        "visible" -> {
+          controller.show(SYSTEM_BARS)
+        }
+        "hidden" -> {
+          controller.hide(SYSTEM_BARS)
+          controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
       }
     }
   }
@@ -46,5 +48,6 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   companion object {
     private const val NAME = "ExpoSystemUI"
     private val TAG = SystemUIModule::class.qualifiedName
+    private val SYSTEM_BARS = WindowInsetsCompat.Type.systemBars()
   }
 }
