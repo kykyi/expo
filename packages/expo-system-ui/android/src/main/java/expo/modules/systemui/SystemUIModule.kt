@@ -175,7 +175,6 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
     }
   }
 
-
   @ExpoMethod
   fun getAppearance(promise: Promise) {
     activity.runOnUiThread {
