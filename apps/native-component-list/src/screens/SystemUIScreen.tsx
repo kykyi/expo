@@ -1,6 +1,6 @@
-import { Appearance, SystemUI } from 'expo-system-ui';
+import { SystemUI } from 'expo-system-ui';
 import * as React from 'react';
-import { Button, Text } from 'react-native';
+import { Button } from 'react-native';
 
 import { Page, Section } from '../components/Page';
 
@@ -133,24 +133,24 @@ function SetStatusBarColorExample() {
   );
 }
 
-const appearances: Appearance[] = ['light', 'dark', 'auto', 'unspecified'];
+// const appearances: Appearance[] = ['light', 'dark', 'auto', 'unspecified'];
 
-function SetAppearanceExample() {
-  const [appearance, setAppearance] = React.useState<Appearance>(appearances[0]);
+// function SetAppearanceExample() {
+//   const [appearance, setAppearance] = React.useState<Appearance>(appearances[0]);
 
-  const nextValue = React.useMemo(() => {
-    const index = appearances.indexOf(appearance);
-    const newValue = appearances[(index + 1) % appearances.length];
-    return newValue;
-  }, [appearance]);
-  const onPress = React.useCallback(() => {
-    // TODO: Implement SystemUI.setAppearance(nextValue);
-    setAppearance(nextValue);
-  }, [nextValue]);
+//   const nextValue = React.useMemo(() => {
+//     const index = appearances.indexOf(appearance);
+//     const newValue = appearances[(index + 1) % appearances.length];
+//     return newValue;
+//   }, [appearance]);
+//   const onPress = React.useCallback(() => {
+//     // TODO: Implement SystemUI.setAppearance(nextValue);
+//     setAppearance(nextValue);
+//   }, [nextValue]);
 
-  return (
-    <>
-      <Button onPress={onPress} title={`Set Appearance to ${nextValue}`} />
-    </>
-  );
-}
+//   return (
+//     <>
+//       <Button onPress={onPress} title={`Set Appearance to ${nextValue}`} />
+//     </>
+//   );
+// }
