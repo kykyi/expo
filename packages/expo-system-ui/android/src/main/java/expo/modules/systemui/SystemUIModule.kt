@@ -7,14 +7,15 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import expo.modules.core.ExportedModule
 import expo.modules.core.ModuleRegistry
+import expo.modules.core.interfaces.ActivityProvider
 import expo.modules.core.interfaces.ExpoMethod
 
 class SystemUIModule(context: Context) : ExportedModule(context) {
 
-  private var mModuleRegistry: ModuleRegistry? = null
+  private lateinit var mActivityProvider: ActivityProvider
   private val activity: Activity
     get() {
-      return context as? Activity ?: throw Error("Cannot get Main Activity!")
+      return mActivityProvider.currentActivity ?: throw Error("Cannot get Main Activity!")
     }
 
   override fun getName(): String {
@@ -22,7 +23,7 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   override fun onCreate(moduleRegistry: ModuleRegistry) {
-    mModuleRegistry = moduleRegistry
+    mActivityProvider = moduleRegistry.getModule(ActivityProvider::class.java)
   }
 
   @ExpoMethod
