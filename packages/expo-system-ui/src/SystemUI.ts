@@ -107,27 +107,29 @@ export const SystemUI = {
     return ExpoSystemUI.setSystemUiVisibility(visibility);
   },
 
-  /**
-   * Sets the App's appearance.
-   *
-   * @example
-   * ```typescript
-   * SystemUI.setAppearance("dark");
-   * ```
-   */
-  setAppearance: (appearance: Appearance): Promise<void> => {
-    assertIsOnPlatform('setAppearance', ['android']);
-    return ExpoSystemUI.setAppearance(appearance);
-  },
-  /**
-   * Gets the App's appearance.
-   * @example
-   * ```typescript
-   * const appearance = await SystemUI.getAppearance();
-   * ```
-   */
-  getAppearance: (): Promise<Appearance> => {
-    assertIsOnPlatform('getAppearance', ['android']);
-    return ExpoSystemUI.getAppearance();
-  },
+  // FIXME(Marc): Setting appearance crashes on Android because of RNScreens.
+  //  See `SystemUIModule.kt`'s `setAppearance` function for details.
+  // /**
+  //  * Sets the App's appearance.
+  //  *
+  //  * @example
+  //  * ```typescript
+  //  * SystemUI.setAppearance("dark");
+  //  * ```
+  //  */
+  // setAppearance: (appearance: Appearance): Promise<void> => {
+  //   assertIsOnPlatform('setAppearance', ['android']);
+  //   return ExpoSystemUI.setAppearance(appearance);
+  // },
+  // /**
+  //  * Gets the App's appearance.
+  //  * @example
+  //  * ```typescript
+  //  * const appearance = await SystemUI.getAppearance();
+  //  * ```
+  //  */
+  // getAppearance: (): Promise<Appearance> => {
+  //   assertIsOnPlatform('getAppearance', ['android']);
+  //   return ExpoSystemUI.getAppearance();
+  // },
 };

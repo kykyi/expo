@@ -119,6 +119,11 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
 
   @ExpoMethod
   fun setAppearance(appearance: String, promise: Promise) {
+    // FIXME(Marc): This crashes the App with an error from RNScreens:
+    //    java.lang.IllegalStateException: Screen fragments should never be restored.
+    //    Follow instructions from https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704067 to properly configure your main activity.
+    //  even though the Main Activity is configured correctly (`super.onCreate(null)`)
+    //  as soon as this is fixed, we can expose it to JS again.
     activity.runOnUiThread {
       when (appearance) {
         "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

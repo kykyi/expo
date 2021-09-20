@@ -69,21 +69,4 @@ export declare const SystemUI: {
      * ```
      */
     setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => Promise<void>;
-    /**
-     * Sets the App's appearance.
-     *
-     * @example
-     * ```typescript
-     * SystemUI.setAppearance("dark");
-     * ```
-     */
-    setAppearance: (appearance: Appearance) => Promise<void>;
-    /**
-     * Gets the App's appearance.
-     * @example
-     * ```typescript
-     * const appearance = await SystemUI.getAppearance();
-     * ```
-     */
-    getAppearance: () => Promise<Appearance>;
 };
