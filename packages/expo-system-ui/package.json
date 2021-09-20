@@ -28,8 +28,11 @@
   },
   "author": "650 Industries, Inc.",
   "license": "MIT",
-  "homepage": "https://docs.expo.io/versions/latest/sdk/module-template",
+  "homepage": "https://docs.expo.dev/versions/latest/sdk/module-template",
   "dependencies": {
+    "expo-modules-core": "~0.3.2"
+  },
+  "devDependencies": {
     "expo-module-scripts": "^2.0.0"
   },
   "jest": {
