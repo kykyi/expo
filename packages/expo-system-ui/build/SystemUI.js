@@ -1,4 +1,10 @@
+import { Platform } from 'expo-modules-core';
 import ExpoSystemUI from './ExpoSystemUI';
+const assertIsOnPlatform = (functionName, onlyAvailableOn) => {
+    if (!onlyAvailableOn.includes(Platform.OS)) {
+        throw new Error(`"${functionName}" is only available on ${onlyAvailableOn.join(' or ')}! OS: ${Platform.OS}`);
+    }
+};
 /**
  * Configures the device's System UI.
  *
@@ -13,6 +19,7 @@ export const SystemUI = {
      * ```
      */
     setNavigationBarColor: (color) => {
+        assertIsOnPlatform('setNavigationBarColor', ['android']);
         return ExpoSystemUI.setNavigationBarColor(color);
     },
     /**
@@ -24,6 +31,7 @@ export const SystemUI = {
      * ```
      */
     setNavigationBarVisibility: (visibility) => {
+        assertIsOnPlatform('setSystemUiVisibility', ['android']);
         return ExpoSystemUI.setSystemUiVisibility(visibility);
     },
 };
