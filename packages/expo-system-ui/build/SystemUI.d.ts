@@ -61,14 +61,23 @@ export declare const SystemUI: {
      */
     getNavigationBarDividerColor: () => Promise<ColorValue>;
     /**
-     * Changes the Android Navigation Bar visibility.
+     * Changes the Android Navigation Bar's visibility.
      *
      * @example
      * ```typescript
-     * SystemUI.setVisibility("hidden");
+     * SystemUI.setNavigationBarVisibility("hidden");
      * ```
      */
     setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => Promise<void>;
+    /**
+     * Changes the Android Status Bar's visibility.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setStatusBarVisibility("hidden");
+     * ```
+     */
+    setStatusBarVisibility: (visibility: 'visible' | 'hidden') => Promise<void>;
     /**
      * Changes the Android Navigation Bar's foreground style.
      *

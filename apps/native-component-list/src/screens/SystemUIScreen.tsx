@@ -19,9 +19,9 @@ export default function SystemUIScreen() {
       <Section title="Navigation Bar Divider Color">
         <SetNavigationBarDividerColorExample />
       </Section>
-      <Section title="Appearance">
+      {/* <Section title="Appearance">
         <SetAppearanceExample />
-      </Section>
+      </Section> */}
     </Page>
   );
 }
@@ -31,20 +31,38 @@ SystemUIScreen.navigationOptions = {
 };
 
 function SetNavigationBarVisibilityExample() {
-  const [value, setValue] = React.useState<'visible' | 'hidden'>('visible');
+  const [statusBarVisibility, setStatusBarVisibility] = React.useState<'visible' | 'hidden'>(
+    'visible'
+  );
+  const [navigationBarVisibility, setNavigationBarVisibility] = React.useState<
+    'visible' | 'hidden'
+  >('visible');
 
-  const onPress = React.useCallback(() => {
-    setValue((currentValue) => {
+  const toggleNavigationBar = React.useCallback(() => {
+    setNavigationBarVisibility((currentValue) => {
       const newValue = currentValue === 'visible' ? 'hidden' : 'visible';
       SystemUI.setNavigationBarVisibility(newValue);
+      return newValue;
+    });
+  }, []);
+  const toggleStatusBar = React.useCallback(() => {
+    setStatusBarVisibility((currentValue) => {
+      const newValue = currentValue === 'visible' ? 'hidden' : 'visible';
+      SystemUI.setStatusBarVisibility(newValue);
       return newValue;
     });
   }, []);
 
   return (
     <>
-      <Text>Visibility: {value}</Text>
-      <Button onPress={onPress} title={value === 'hidden' ? 'Show System UI' : 'Hide System UI'} />
+      <Button
+        onPress={toggleNavigationBar}
+        title={navigationBarVisibility === 'hidden' ? 'Show Navigation Bar' : 'Hide Navigation Bar'}
+      />
+      <Button
+        onPress={toggleStatusBar}
+        title={statusBarVisibility === 'hidden' ? 'Show Status Bar' : 'Hide Status Bar'}
+      />
     </>
   );
 }

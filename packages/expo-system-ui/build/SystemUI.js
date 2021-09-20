@@ -78,16 +78,28 @@ export const SystemUI = {
         return ExpoSystemUI.getNavigationBarDividerColor();
     },
     /**
-     * Changes the Android Navigation Bar visibility.
+     * Changes the Android Navigation Bar's visibility.
      *
      * @example
      * ```typescript
-     * SystemUI.setVisibility("hidden");
+     * SystemUI.setNavigationBarVisibility("hidden");
      * ```
      */
     setNavigationBarVisibility: (visibility) => {
-        assertIsOnPlatform('setSystemUiVisibility', ['android']);
-        return ExpoSystemUI.setSystemUiVisibility(visibility);
+        assertIsOnPlatform('setNavigationBarVisibility', ['android']);
+        return ExpoSystemUI.setNavigationBarVisibility(visibility);
+    },
+    /**
+     * Changes the Android Status Bar's visibility.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setStatusBarVisibility("hidden");
+     * ```
+     */
+    setStatusBarVisibility: (visibility) => {
+        assertIsOnPlatform('setStatusBarVisibility', ['android']);
+        return ExpoSystemUI.setStatusBarVisibility(visibility);
     },
     /**
      * Changes the Android Navigation Bar's foreground style.

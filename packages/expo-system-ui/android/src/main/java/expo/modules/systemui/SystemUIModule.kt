@@ -140,15 +140,33 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun setSystemUiVisibility(visibility: String, promise: Promise) {
+  fun setNavigationBarVisibility(visibility: String, promise: Promise) {
     activity.runOnUiThread {
       WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
         when (visibility) {
           "visible" -> {
-            controller.show(SYSTEM_BARS)
+            controller.show(WindowInsetsCompat.Type.navigationBars())
           }
           "hidden" -> {
-            controller.hide(SYSTEM_BARS)
+            controller.hide(WindowInsetsCompat.Type.navigationBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+          }
+        }
+      }
+      promise.resolve(null)
+    }
+  }
+
+  @ExpoMethod
+  fun setStatusBarVisibility(visibility: String, promise: Promise) {
+    activity.runOnUiThread {
+      WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
+        when (visibility) {
+          "visible" -> {
+            controller.show(WindowInsetsCompat.Type.statusBars())
+          }
+          "hidden" -> {
+            controller.hide(WindowInsetsCompat.Type.statusBars())
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
           }
         }
@@ -191,7 +209,6 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
 
   companion object {
     private const val NAME = "ExpoSystemUI"
-    private val SYSTEM_BARS = WindowInsetsCompat.Type.systemBars()
 
     fun colorToHex(color: Int): String {
       return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color))
