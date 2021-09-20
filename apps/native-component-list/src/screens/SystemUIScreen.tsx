@@ -24,17 +24,18 @@ SystemUIScreen.navigationOptions = {
 function SetNavigationBarVisibilityExample() {
   const [value, setValue] = React.useState<'visible' | 'hidden'>('visible');
 
+  const onPress = React.useCallback(() => {
+    setValue((currentValue) => {
+      const newValue = currentValue === 'visible' ? 'hidden' : 'visible';
+      SystemUI.setNavigationBarVisibility(newValue);
+      return newValue;
+    });
+  }, []);
+
   return (
     <>
       <Text>Visibility: {value}</Text>
-
-      <Button
-        onPress={() => {
-          SystemUI.setNavigationBarVisibility(value);
-          setValue((curr) => (curr === 'visible' ? 'hidden' : 'visible'));
-        }}
-        title="Toggle Visibility"
-      />
+      <Button onPress={onPress} title="Toggle Visibility" />
     </>
   );
 }
