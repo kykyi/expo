@@ -29,24 +29,28 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
 
   @ExpoMethod
   fun setNavigationBarColor(color: String, promise: Promise) {
-    activity.window.navigationBarColor = Color.parseColor(color)
-    promise.resolve(null)
+    activity.runOnUiThread {
+      activity.window.navigationBarColor = Color.parseColor(color)
+      promise.resolve(null)
+    }
   }
 
   @ExpoMethod
   fun setSystemUiVisibility(visibility: String, promise: Promise) {
-    WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
-      when (visibility) {
-        "visible" -> {
-          controller.show(SYSTEM_BARS)
-        }
-        "hidden" -> {
-          controller.hide(SYSTEM_BARS)
-          controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    activity.runOnUiThread {
+      WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
+        when (visibility) {
+          "visible" -> {
+            controller.show(SYSTEM_BARS)
+          }
+          "hidden" -> {
+            controller.hide(SYSTEM_BARS)
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+          }
         }
       }
+      promise.resolve(null)
     }
-    promise.resolve(null)
   }
 
   companion object {
