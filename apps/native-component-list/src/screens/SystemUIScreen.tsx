@@ -1,4 +1,4 @@
-import { setNavigationBarColor, setSystemUiVisibility } from 'expo-system-ui';
+import { SystemUI } from 'expo-system-ui';
 import * as React from 'react';
 import { Button, Text } from 'react-native';
 
@@ -30,7 +30,7 @@ function SetNavigationBarVisibilityExample() {
 
       <Button
         onPress={() => {
-          setSystemUiVisibility(value);
+          SystemUI.setVisibility(value);
           setValue((curr) => (curr === 'visible' ? 'hidden' : 'visible'));
         }}
         title="Toggle Visibility"
@@ -53,7 +53,7 @@ function SetNavigationBarColorExample() {
     <>
       <Button
         onPress={() => {
-          setNavigationBarColor(getRandomColor());
+          SystemUI.setNavigationBarColor(getRandomColor());
         }}
         title="Set Navigation Bar to random color"
       />

@@ -3,27 +3,30 @@ import { ColorValue } from 'react-native';
 import ExpoSystemUI from './ExpoSystemUI';
 
 /**
- * Changes the Android Navigation Bar color.
+ * Configures the device's System UI.
  *
- * @example
- * ```typescript
- * setNavigationBarColor("white");
- * ```
+ * On Android, the System UI contains the Navigation Bar and Status Bar, on iOS this contains the Home Indicator and Status Bar.
  */
-export function setNavigationBarColor(color: ColorValue): void {
-  // TODO: Do we need to call processColor?
-  // const colorString = processColor(color)
-  return ExpoSystemUI.setNavigationBarColor(color);
-}
-
-/**
- * Changes the Android Navigation Bar visibility.
- *
- * @example
- * ```typescript
- * setSystemUiVisibility("hidden");
- * ```
- */
-export function setSystemUiVisibility(visibility: 'visible' | 'hidden'): void {
-  return ExpoSystemUI.setSystemUiVisibility(visibility);
-}
+export const SystemUI = {
+  /**
+   * Changes the Android Navigation Bar color.
+   * @example
+   * ```typescript
+   * SystemUI.setNavigationBarColor("white");
+   * ```
+   */
+  setNavigationBarColor: (color: ColorValue) => {
+    return ExpoSystemUI.setNavigationBarColor(color);
+  },
+  /**
+   * Changes the Android Navigation Bar visibility.
+   *
+   * @example
+   * ```typescript
+   * SystemUI.setVisibility("hidden");
+   * ```
+   */
+  setVisibility: (visibility: 'visible' | 'hidden') => {
+    return ExpoSystemUI.setSystemUiVisibility(visibility);
+  },
+};

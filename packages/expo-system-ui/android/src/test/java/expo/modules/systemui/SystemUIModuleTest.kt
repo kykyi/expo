@@ -29,5 +29,4 @@ class SystemUIModuleTest {
     // TODO: Test
     assertTrue(true)
   }
-
 }
