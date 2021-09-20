@@ -1,6 +1,15 @@
+import { Platform } from 'expo-modules-core';
 import { ColorValue } from 'react-native';
 
 import ExpoSystemUI from './ExpoSystemUI';
+
+const assertIsOnPlatform = (functionName: string, onlyAvailableOn: typeof Platform['OS'][]) => {
+  if (!onlyAvailableOn.includes(Platform.OS)) {
+    throw new Error(
+      `"${functionName}" is only available on ${onlyAvailableOn.join(' or ')}! OS: ${Platform.OS}`
+    );
+  }
+};
 
 /**
  * Configures the device's System UI.
@@ -16,6 +25,7 @@ export const SystemUI = {
    * ```
    */
   setNavigationBarColor: (color: ColorValue) => {
+    assertIsOnPlatform('setNavigationBarColor', ['android']);
     return ExpoSystemUI.setNavigationBarColor(color);
   },
   /**
@@ -27,6 +37,7 @@ export const SystemUI = {
    * ```
    */
   setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => {
+    assertIsOnPlatform('setSystemUiVisibility', ['android']);
     return ExpoSystemUI.setSystemUiVisibility(visibility);
   },
 };
