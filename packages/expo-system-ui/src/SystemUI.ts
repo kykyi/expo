@@ -26,7 +26,7 @@ export const SystemUI = {
    * SystemUI.setVisibility("hidden");
    * ```
    */
-  setVisibility: (visibility: 'visible' | 'hidden') => {
+  setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => {
     return ExpoSystemUI.setSystemUiVisibility(visibility);
   },
 };

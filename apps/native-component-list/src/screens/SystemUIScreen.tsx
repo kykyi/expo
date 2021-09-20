@@ -30,7 +30,7 @@ function SetNavigationBarVisibilityExample() {
 
       <Button
         onPress={() => {
-          SystemUI.setVisibility(value);
+          SystemUI.setNavigationBarVisibility(value);
           setValue((curr) => (curr === 'visible' ? 'hidden' : 'visible'));
         }}
         title="Toggle Visibility"

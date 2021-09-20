@@ -21,5 +21,5 @@ export declare const SystemUI: {
      * SystemUI.setVisibility("hidden");
      * ```
      */
-    setVisibility: (visibility: 'visible' | 'hidden') => any;
+    setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => any;
 };
