@@ -12,7 +12,7 @@ export declare const SystemUI: {
      * SystemUI.setNavigationBarColor("white");
      * ```
      */
-    setNavigationBarColor: (color: ColorValue) => any;
+    setNavigationBarColor: (color: ColorValue) => Promise<void>;
     /**
      * Changes the Android Navigation Bar visibility.
      *
@@ -21,5 +21,5 @@ export declare const SystemUI: {
      * SystemUI.setVisibility("hidden");
      * ```
      */
-    setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => any;
+    setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => Promise<void>;
 };

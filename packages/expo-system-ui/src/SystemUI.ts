@@ -24,7 +24,7 @@ export const SystemUI = {
    * SystemUI.setNavigationBarColor("white");
    * ```
    */
-  setNavigationBarColor: (color: ColorValue) => {
+  setNavigationBarColor: (color: ColorValue): Promise<void> => {
     assertIsOnPlatform('setNavigationBarColor', ['android']);
     return ExpoSystemUI.setNavigationBarColor(color);
   },
@@ -36,7 +36,7 @@ export const SystemUI = {
    * SystemUI.setVisibility("hidden");
    * ```
    */
-  setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => {
+  setNavigationBarVisibility: (visibility: 'visible' | 'hidden'): Promise<void> => {
     assertIsOnPlatform('setSystemUiVisibility', ['android']);
     return ExpoSystemUI.setSystemUiVisibility(visibility);
   },

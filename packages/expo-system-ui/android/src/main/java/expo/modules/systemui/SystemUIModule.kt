@@ -7,6 +7,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import expo.modules.core.ExportedModule
 import expo.modules.core.ModuleRegistry
+import expo.modules.core.Promise
 import expo.modules.core.interfaces.ActivityProvider
 import expo.modules.core.interfaces.ExpoMethod
 
@@ -27,12 +28,13 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun setNavigationBarColor(color: String) {
+  fun setNavigationBarColor(color: String, promise: Promise) {
     activity.window.navigationBarColor = Color.parseColor(color)
+    promise.resolve(null)
   }
 
   @ExpoMethod
-  fun setSystemUiVisibility(visibility: String) {
+  fun setSystemUiVisibility(visibility: String, promise: Promise) {
     WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
       when (visibility) {
         "visible" -> {
@@ -44,11 +46,11 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
         }
       }
     }
+    promise.resolve(null)
   }
 
   companion object {
     private const val NAME = "ExpoSystemUI"
-    private val TAG = SystemUIModule::class.qualifiedName
     private val SYSTEM_BARS = WindowInsetsCompat.Type.systemBars()
   }
 }
