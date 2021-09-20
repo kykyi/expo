@@ -12,48 +12,48 @@ const assertIsOnPlatform = (functionName, onlyAvailableOn) => {
  */
 export const SystemUI = {
     /**
-     * Changes the Android Status Bar color.
+     * Changes the Android Status Bar's background color.
      * @example
      * ```typescript
-     * SystemUI.setNavigationBarColor("white");
+     * SystemUI.setStatusBarBackgroundColor("white");
      * ```
      */
-    setStatusBarColor: (color) => {
-        assertIsOnPlatform('setStatusBarColor', ['android']);
-        return ExpoSystemUI.setStatusBarColor(color);
+    setStatusBarBackgroundColor: (color) => {
+        assertIsOnPlatform('setStatusBarBackgroundColor', ['android']);
+        return ExpoSystemUI.setStatusBarBackgroundColor(color);
     },
     /**
-     * Gets the Android Status Bar color.
+     * Gets the Android Status Bar's background color.
      * @example
      * ```typescript
-     * const color = await SystemUI.getStatusBarColor();
+     * const color = await SystemUI.getStatusBarBackgroundColor();
      * ```
      */
-    getStatusBarColor: () => {
-        assertIsOnPlatform('getStatusBarColor', ['android']);
-        return ExpoSystemUI.getStatusBarColor();
+    getStatusBarBackgroundColor: () => {
+        assertIsOnPlatform('getStatusBarBackgroundColor', ['android']);
+        return ExpoSystemUI.getStatusBarBackgroundColor();
     },
     /**
-     * Changes the Android Navigation Bar color.
+     * Changes the Android Navigation Bar's background color.
      * @example
      * ```typescript
-     * SystemUI.setNavigationBarColor("white");
+     * SystemUI.setNavigationBarBackgroundColor("white");
      * ```
      */
-    setNavigationBarColor: (color) => {
-        assertIsOnPlatform('setNavigationBarColor', ['android']);
-        return ExpoSystemUI.setNavigationBarColor(color);
+    setNavigationBarBackgroundColor: (color) => {
+        assertIsOnPlatform('setNavigationBarBackgroundColor', ['android']);
+        return ExpoSystemUI.setNavigationBarBackgroundColor(color);
     },
     /**
-     * Gets the Android Navigation Bar color.
+     * Gets the Android Navigation Bar's background color.
      * @example
      * ```typescript
-     * const color = await SystemUI.getNavigationBarColor();
+     * const color = await SystemUI.getNavigationBarBackgroundColor();
      * ```
      */
-    getNavigationBarColor: () => {
-        assertIsOnPlatform('getNavigationBarColor', ['android']);
-        return ExpoSystemUI.getNavigationBarColor();
+    getNavigationBarBackgroundColor: () => {
+        assertIsOnPlatform('getNavigationBarBackgroundColor', ['android']);
+        return ExpoSystemUI.getNavigationBarBackgroundColor();
     },
     /**
      * Changes the Android Navigation Bar's Divider color.
@@ -88,6 +88,54 @@ export const SystemUI = {
     setNavigationBarVisibility: (visibility) => {
         assertIsOnPlatform('setSystemUiVisibility', ['android']);
         return ExpoSystemUI.setSystemUiVisibility(visibility);
+    },
+    /**
+     * Changes the Android Navigation Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setNavigationBarForegroundStyle("light");
+     * ```
+     */
+    setNavigationBarForegroundStyle: (style) => {
+        assertIsOnPlatform('setNavigationBarForegroundStyle', ['android']);
+        return ExpoSystemUI.setNavigationBarForegroundStyle(style);
+    },
+    /**
+     * Gets the Android Navigation Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * const style = await SystemUI.getNavigationBarForegroundStyle();
+     * ```
+     */
+    getNavigationBarForegroundStyle: () => {
+        assertIsOnPlatform('getNavigationBarForegroundStyle', ['android']);
+        return ExpoSystemUI.getNavigationBarForegroundStyle();
+    },
+    /**
+     * Changes the Android Status Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setStatusBarForegroundStyle("light");
+     * ```
+     */
+    setStatusBarForegroundStyle: (style) => {
+        assertIsOnPlatform('setStatusBarForegroundStyle', ['android']);
+        return ExpoSystemUI.setStatusBarForegroundStyle(style);
+    },
+    /**
+     * Gets the Android Status Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * const style = await SystemUI.getStatusBarForegroundStyle();
+     * ```
+     */
+    getStatusBarForegroundStyle: () => {
+        assertIsOnPlatform('getStatusBarForegroundStyle', ['android']);
+        return ExpoSystemUI.getStatusBarForegroundStyle();
     },
     // FIXME(Marc): Setting appearance crashes on Android because of RNScreens.
     //  See `SystemUIModule.kt`'s `setAppearance` function for details.

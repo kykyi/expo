@@ -59,13 +59,22 @@ function getRandomColor(): string {
 }
 
 function SetNavigationBarColorExample() {
+  const [style, setStyle] = React.useState<'light' | 'dark'>('light');
+  const nextStyle = style === 'light' ? 'dark' : 'light';
   return (
     <>
       <Button
         onPress={() => {
-          SystemUI.setNavigationBarColor(getRandomColor());
+          SystemUI.setNavigationBarBackgroundColor(getRandomColor());
         }}
         title="Set Navigation Bar to random color"
+      />
+      <Button
+        onPress={() => {
+          SystemUI.setNavigationBarForegroundStyle(nextStyle);
+          setStyle(nextStyle);
+        }}
+        title={`Set Navigation Bar Style to ${nextStyle}`}
       />
     </>
   );
@@ -85,13 +94,22 @@ function SetNavigationBarDividerColorExample() {
 }
 
 function SetStatusBarColorExample() {
+  const [style, setStyle] = React.useState<'light' | 'dark'>('light');
+  const nextStyle = style === 'light' ? 'dark' : 'light';
   return (
     <>
       <Button
         onPress={() => {
-          SystemUI.setStatusBarColor(getRandomColor());
+          SystemUI.setStatusBarBackgroundColor(getRandomColor());
         }}
         title="Set Status Bar to random color"
+      />
+      <Button
+        onPress={() => {
+          SystemUI.setStatusBarForegroundStyle(nextStyle);
+          setStyle(nextStyle);
+        }}
+        title={`Set Status Bar Style to ${nextStyle}`}
       />
     </>
   );
@@ -108,7 +126,7 @@ function SetAppearanceExample() {
     return newValue;
   }, [appearance]);
   const onPress = React.useCallback(() => {
-    SystemUI.setAppearance(nextValue);
+    // TODO: Implement SystemUI.setAppearance(nextValue);
     setAppearance(nextValue);
   }, [nextValue]);
 

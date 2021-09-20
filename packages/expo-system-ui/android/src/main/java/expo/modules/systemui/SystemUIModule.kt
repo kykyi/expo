@@ -30,7 +30,7 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun getNavigationBarColor(promise: Promise) {
+  fun getNavigationBarBackgroundColor(promise: Promise) {
     activity.runOnUiThread {
       val color = colorToHex(activity.window.navigationBarColor)
       promise.resolve(color)
@@ -38,7 +38,7 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun setNavigationBarColor(color: String, promise: Promise) {
+  fun setNavigationBarBackgroundColor(color: String, promise: Promise) {
     activity.runOnUiThread {
       activity.window.navigationBarColor = Color.parseColor(color)
       promise.resolve(null)
@@ -70,7 +70,7 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun getStatusBarColor(promise: Promise) {
+  fun getStatusBarBackgroundColor(promise: Promise) {
     activity.runOnUiThread {
       val color = colorToHex(activity.window.statusBarColor)
       promise.resolve(color)
@@ -78,10 +78,64 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
   }
 
   @ExpoMethod
-  fun setStatusBarColor(color: String, promise: Promise) {
+  fun setStatusBarBackgroundColor(color: String, promise: Promise) {
     activity.runOnUiThread {
       activity.window.statusBarColor = Color.parseColor(color)
       promise.resolve(null)
+    }
+  }
+
+  @ExpoMethod
+  fun getStatusBarForegroundStyle(promise: Promise) {
+    activity.runOnUiThread {
+      WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
+        val style = if (controller.isAppearanceLightStatusBars) "light" else "dark"
+        promise.resolve(style)
+      }
+    }
+  }
+
+  @ExpoMethod
+  fun setStatusBarForegroundStyle(style: String, promise: Promise) {
+    activity.runOnUiThread {
+      WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
+        when (style) {
+          "light" -> controller.isAppearanceLightStatusBars = false
+          "dark" -> controller.isAppearanceLightStatusBars = true
+          else -> {
+            promise.reject("invalid-value", "Value \"$style\" is not a valid Status Bar foreground style!")
+            return@let
+          }
+        }
+        promise.resolve(null)
+      }
+    }
+  }
+
+  @ExpoMethod
+  fun getNavigationBarForegroundStyle(promise: Promise) {
+    activity.runOnUiThread {
+      WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
+        val style = if (controller.isAppearanceLightNavigationBars) "light" else "dark"
+        promise.resolve(style)
+      }
+    }
+  }
+
+  @ExpoMethod
+  fun setNavigationBarForegroundStyle(style: String, promise: Promise) {
+    activity.runOnUiThread {
+      WindowInsetsControllerCompat(activity.window, activity.window.decorView).let { controller ->
+        when (style) {
+          "light" -> controller.isAppearanceLightNavigationBars = false
+          "dark" -> controller.isAppearanceLightNavigationBars = true
+          else -> {
+            promise.reject("invalid-value", "Value \"$style\" is not a valid Navigation Bar foreground style!")
+            return@let
+          }
+        }
+        promise.resolve(null)
+      }
     }
   }
 

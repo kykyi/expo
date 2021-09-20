@@ -13,37 +13,37 @@ export declare type Appearance = 'light' | 'dark' | 'auto' | 'unspecified';
  */
 export declare const SystemUI: {
     /**
-     * Changes the Android Status Bar color.
+     * Changes the Android Status Bar's background color.
      * @example
      * ```typescript
-     * SystemUI.setNavigationBarColor("white");
+     * SystemUI.setStatusBarBackgroundColor("white");
      * ```
      */
-    setStatusBarColor: (color: ColorValue) => Promise<void>;
+    setStatusBarBackgroundColor: (color: ColorValue) => Promise<void>;
     /**
-     * Gets the Android Status Bar color.
+     * Gets the Android Status Bar's background color.
      * @example
      * ```typescript
-     * const color = await SystemUI.getStatusBarColor();
+     * const color = await SystemUI.getStatusBarBackgroundColor();
      * ```
      */
-    getStatusBarColor: () => Promise<ColorValue>;
+    getStatusBarBackgroundColor: () => Promise<ColorValue>;
     /**
-     * Changes the Android Navigation Bar color.
+     * Changes the Android Navigation Bar's background color.
      * @example
      * ```typescript
-     * SystemUI.setNavigationBarColor("white");
+     * SystemUI.setNavigationBarBackgroundColor("white");
      * ```
      */
-    setNavigationBarColor: (color: ColorValue) => Promise<void>;
+    setNavigationBarBackgroundColor: (color: ColorValue) => Promise<void>;
     /**
-     * Gets the Android Navigation Bar color.
+     * Gets the Android Navigation Bar's background color.
      * @example
      * ```typescript
-     * const color = await SystemUI.getNavigationBarColor();
+     * const color = await SystemUI.getNavigationBarBackgroundColor();
      * ```
      */
-    getNavigationBarColor: () => Promise<ColorValue>;
+    getNavigationBarBackgroundColor: () => Promise<ColorValue>;
     /**
      * Changes the Android Navigation Bar's Divider color.
      * @example
@@ -69,4 +69,40 @@ export declare const SystemUI: {
      * ```
      */
     setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => Promise<void>;
+    /**
+     * Changes the Android Navigation Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setNavigationBarForegroundStyle("light");
+     * ```
+     */
+    setNavigationBarForegroundStyle: (style: 'light' | 'dark') => Promise<void>;
+    /**
+     * Gets the Android Navigation Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * const style = await SystemUI.getNavigationBarForegroundStyle();
+     * ```
+     */
+    getNavigationBarForegroundStyle: () => Promise<'light' | 'dark'>;
+    /**
+     * Changes the Android Status Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setStatusBarForegroundStyle("light");
+     * ```
+     */
+    setStatusBarForegroundStyle: (style: 'light' | 'dark') => Promise<void>;
+    /**
+     * Gets the Android Status Bar's foreground style.
+     *
+     * @example
+     * ```typescript
+     * const style = await SystemUI.getStatusBarForegroundStyle();
+     * ```
+     */
+    getStatusBarForegroundStyle: () => Promise<'light' | 'dark'>;
 };
