@@ -4,23 +4,17 @@
 
 @interface EXSystemUIModule ()
 
-@property (nonatomic, weak) UMModuleRegistry *moduleRegistry;
+@property (nonatomic, weak) EXModuleRegistry *moduleRegistry;
 
 @end
 
 @implementation EXSystemUIModule
 
-UM_EXPORT_MODULE(ExpoSystemUI);
+EX_EXPORT_MODULE(ExpoSystemUI);
 
-- (void)setModuleRegistry:(UMModuleRegistry *)moduleRegistry
+- (void)setModuleRegistry:(EXModuleRegistry *)moduleRegistry
 {
   _moduleRegistry = moduleRegistry;
-}
-
-UM_EXPORT_METHOD_AS(setNavigationBarColor,
-                    color:(UIColor *)color)
-{
-  // TODO: Implement or remove setNavigationBarColor?
 }
 
 @end
