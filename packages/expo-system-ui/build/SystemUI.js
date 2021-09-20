@@ -89,5 +89,28 @@ export const SystemUI = {
         assertIsOnPlatform('setSystemUiVisibility', ['android']);
         return ExpoSystemUI.setSystemUiVisibility(visibility);
     },
+    /**
+     * Sets the App's appearance.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setAppearance("dark");
+     * ```
+     */
+    setAppearance: (appearance) => {
+        assertIsOnPlatform('setAppearance', ['android']);
+        return ExpoSystemUI.setAppearance(appearance);
+    },
+    /**
+     * Gets the App's appearance.
+     * @example
+     * ```typescript
+     * const appearance = await SystemUI.getAppearance();
+     * ```
+     */
+    getAppearance: () => {
+        assertIsOnPlatform('getAppearance', ['android']);
+        return ExpoSystemUI.getAppearance();
+    },
 };
 //# sourceMappingURL=SystemUI.js.map

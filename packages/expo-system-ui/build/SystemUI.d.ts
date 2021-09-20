@@ -1,5 +1,12 @@
 import { ColorValue } from 'react-native';
 /**
+ * * "light": Light Mode
+ * * "dark": Dark/Night Mode
+ * * "auto": Follow System mode, automatically switch to dark mode.
+ * * "unspecified": Default
+ */
+export declare type Appearance = 'light' | 'dark' | 'auto' | 'unspecified';
+/**
  * Configures the device's System UI.
  *
  * On Android, the System UI contains the Navigation Bar and Status Bar, on iOS this contains the Home Indicator and Status Bar.
@@ -62,4 +69,21 @@ export declare const SystemUI: {
      * ```
      */
     setNavigationBarVisibility: (visibility: 'visible' | 'hidden') => Promise<void>;
+    /**
+     * Sets the App's appearance.
+     *
+     * @example
+     * ```typescript
+     * SystemUI.setAppearance("dark");
+     * ```
+     */
+    setAppearance: (appearance: Appearance) => Promise<void>;
+    /**
+     * Gets the App's appearance.
+     * @example
+     * ```typescript
+     * const appearance = await SystemUI.getAppearance();
+     * ```
+     */
+    getAppearance: () => Promise<Appearance>;
 };

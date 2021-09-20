@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import expo.modules.core.ExportedModule
@@ -97,6 +98,33 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
           }
         }
+      }
+      promise.resolve(null)
+    }
+  }
+
+
+  @ExpoMethod
+  fun getAppearance(promise: Promise) {
+    activity.runOnUiThread {
+      val appearance = when (AppCompatDelegate.getDefaultNightMode()) {
+        AppCompatDelegate.MODE_NIGHT_NO -> "light"
+        AppCompatDelegate.MODE_NIGHT_YES -> "dark"
+        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> "auto"
+        else -> "unspecified"
+      }
+      promise.resolve(appearance)
+    }
+  }
+
+  @ExpoMethod
+  fun setAppearance(appearance: String, promise: Promise) {
+    activity.runOnUiThread {
+      when (appearance) {
+        "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        "unspecified" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED)
       }
       promise.resolve(null)
     }

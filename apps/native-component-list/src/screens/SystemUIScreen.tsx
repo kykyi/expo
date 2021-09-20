@@ -1,4 +1,4 @@
-import { SystemUI } from 'expo-system-ui';
+import { Appearance, SystemUI } from 'expo-system-ui';
 import * as React from 'react';
 import { Button, Text } from 'react-native';
 
@@ -18,6 +18,9 @@ export default function SystemUIScreen() {
       </Section>
       <Section title="Navigation Bar Divider Color">
         <SetNavigationBarDividerColorExample />
+      </Section>
+      <Section title="Appearance">
+        <SetAppearanceExample />
       </Section>
     </Page>
   );
@@ -90,6 +93,28 @@ function SetStatusBarColorExample() {
         }}
         title="Set Status Bar to random color"
       />
+    </>
+  );
+}
+
+const appearances: Appearance[] = ['light', 'dark', 'auto', 'unspecified'];
+
+function SetAppearanceExample() {
+  const [appearance, setAppearance] = React.useState<Appearance>(appearances[0]);
+
+  const nextValue = React.useMemo(() => {
+    const index = appearances.indexOf(appearance);
+    const newValue = appearances[(index + 1) % appearances.length];
+    return newValue;
+  }, [appearance]);
+  const onPress = React.useCallback(() => {
+    SystemUI.setAppearance(nextValue);
+    setAppearance(nextValue);
+  }, [nextValue]);
+
+  return (
+    <>
+      <Button onPress={onPress} title={`Set Appearance to ${nextValue}`} />
     </>
   );
 }

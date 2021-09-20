@@ -12,6 +12,14 @@ const assertIsOnPlatform = (functionName: string, onlyAvailableOn: typeof Platfo
 };
 
 /**
+ * * "light": Light Mode
+ * * "dark": Dark/Night Mode
+ * * "auto": Follow System mode, automatically switch to dark mode.
+ * * "unspecified": Default
+ */
+export type Appearance = 'light' | 'dark' | 'auto' | 'unspecified';
+
+/**
  * Configures the device's System UI.
  *
  * On Android, the System UI contains the Navigation Bar and Status Bar, on iOS this contains the Home Indicator and Status Bar.
@@ -39,6 +47,7 @@ export const SystemUI = {
     assertIsOnPlatform('getStatusBarColor', ['android']);
     return ExpoSystemUI.getStatusBarColor();
   },
+
   /**
    * Changes the Android Navigation Bar color.
    * @example
@@ -61,6 +70,7 @@ export const SystemUI = {
     assertIsOnPlatform('getNavigationBarColor', ['android']);
     return ExpoSystemUI.getNavigationBarColor();
   },
+
   /**
    * Changes the Android Navigation Bar's Divider color.
    * @example
@@ -83,6 +93,7 @@ export const SystemUI = {
     assertIsOnPlatform('getNavigationBarDividerColor', ['android']);
     return ExpoSystemUI.getNavigationBarDividerColor();
   },
+
   /**
    * Changes the Android Navigation Bar visibility.
    *
@@ -94,5 +105,29 @@ export const SystemUI = {
   setNavigationBarVisibility: (visibility: 'visible' | 'hidden'): Promise<void> => {
     assertIsOnPlatform('setSystemUiVisibility', ['android']);
     return ExpoSystemUI.setSystemUiVisibility(visibility);
+  },
+
+  /**
+   * Sets the App's appearance.
+   *
+   * @example
+   * ```typescript
+   * SystemUI.setAppearance("dark");
+   * ```
+   */
+  setAppearance: (appearance: Appearance): Promise<void> => {
+    assertIsOnPlatform('setAppearance', ['android']);
+    return ExpoSystemUI.setAppearance(appearance);
+  },
+  /**
+   * Gets the App's appearance.
+   * @example
+   * ```typescript
+   * const appearance = await SystemUI.getAppearance();
+   * ```
+   */
+  getAppearance: (): Promise<Appearance> => {
+    assertIsOnPlatform('getAppearance', ['android']);
+    return ExpoSystemUI.getAppearance();
   },
 };
