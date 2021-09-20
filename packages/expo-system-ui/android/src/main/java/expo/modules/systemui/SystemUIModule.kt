@@ -182,7 +182,7 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
         AppCompatDelegate.MODE_NIGHT_NO -> "light"
         AppCompatDelegate.MODE_NIGHT_YES -> "dark"
         AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> "auto"
-        else -> "unspecified"
+        else -> "default"
       }
       promise.resolve(appearance)
     }
@@ -200,7 +200,7 @@ class SystemUIModule(context: Context) : ExportedModule(context) {
         "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        "unspecified" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED)
+        "default" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED)
       }
       promise.resolve(null)
     }

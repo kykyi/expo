@@ -6,6 +6,13 @@ const assertIsOnPlatform = (functionName, onlyAvailableOn) => {
     }
 };
 /**
+ * * "light": Light Mode
+ * * "dark": Dark/Night Mode
+ * * "auto": Follow System mode, automatically switch to dark mode.
+ * * "unspecified": Default
+ */
+// export type Appearance = 'light' | 'dark' | 'auto' | 'default';
+/**
  * Configures the device's System UI.
  *
  * On Android, the System UI contains the Navigation Bar and Status Bar, on iOS this contains the Home Indicator and Status Bar.

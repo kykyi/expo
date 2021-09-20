@@ -17,7 +17,7 @@ const assertIsOnPlatform = (functionName: string, onlyAvailableOn: typeof Platfo
  * * "auto": Follow System mode, automatically switch to dark mode.
  * * "unspecified": Default
  */
-export type Appearance = 'light' | 'dark' | 'auto' | 'unspecified';
+// export type Appearance = 'light' | 'dark' | 'auto' | 'default';
 
 /**
  * Configures the device's System UI.

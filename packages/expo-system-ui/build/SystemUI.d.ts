@@ -5,7 +5,6 @@ import { ColorValue } from 'react-native';
  * * "auto": Follow System mode, automatically switch to dark mode.
  * * "unspecified": Default
  */
-export declare type Appearance = 'light' | 'dark' | 'auto' | 'unspecified';
 /**
  * Configures the device's System UI.
  *
