@@ -6,6 +6,22 @@ import { ColorValue } from 'react-native';
  */
 export declare const SystemUI: {
     /**
+     * Changes the Android Status Bar color.
+     * @example
+     * ```typescript
+     * SystemUI.setNavigationBarColor("white");
+     * ```
+     */
+    setStatusBarColor: (color: ColorValue) => Promise<void>;
+    /**
+     * Gets the Android Status Bar color.
+     * @example
+     * ```typescript
+     * const color = await SystemUI.getStatusBarColor();
+     * ```
+     */
+    getStatusBarColor: () => Promise<ColorValue>;
+    /**
      * Changes the Android Navigation Bar color.
      * @example
      * ```typescript
@@ -13,6 +29,30 @@ export declare const SystemUI: {
      * ```
      */
     setNavigationBarColor: (color: ColorValue) => Promise<void>;
+    /**
+     * Gets the Android Navigation Bar color.
+     * @example
+     * ```typescript
+     * const color = await SystemUI.getNavigationBarColor();
+     * ```
+     */
+    getNavigationBarColor: () => Promise<ColorValue>;
+    /**
+     * Changes the Android Navigation Bar's Divider color.
+     * @example
+     * ```typescript
+     * SystemUI.setNavigationBarDividerColor("red");
+     * ```
+     */
+    setNavigationBarDividerColor: (color: ColorValue) => Promise<void>;
+    /**
+     * Gets the Android Navigation Bar's Divider color.
+     * @example
+     * ```typescript
+     * const color = await SystemUI.getNavigationBarDividerColor();
+     * ```
+     */
+    getNavigationBarDividerColor: () => Promise<ColorValue>;
     /**
      * Changes the Android Navigation Bar visibility.
      *

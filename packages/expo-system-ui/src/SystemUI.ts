@@ -18,6 +18,28 @@ const assertIsOnPlatform = (functionName: string, onlyAvailableOn: typeof Platfo
  */
 export const SystemUI = {
   /**
+   * Changes the Android Status Bar color.
+   * @example
+   * ```typescript
+   * SystemUI.setNavigationBarColor("white");
+   * ```
+   */
+  setStatusBarColor: (color: ColorValue): Promise<void> => {
+    assertIsOnPlatform('setStatusBarColor', ['android']);
+    return ExpoSystemUI.setStatusBarColor(color);
+  },
+  /**
+   * Gets the Android Status Bar color.
+   * @example
+   * ```typescript
+   * const color = await SystemUI.getStatusBarColor();
+   * ```
+   */
+  getStatusBarColor: (): Promise<ColorValue> => {
+    assertIsOnPlatform('getStatusBarColor', ['android']);
+    return ExpoSystemUI.getStatusBarColor();
+  },
+  /**
    * Changes the Android Navigation Bar color.
    * @example
    * ```typescript
@@ -27,6 +49,39 @@ export const SystemUI = {
   setNavigationBarColor: (color: ColorValue): Promise<void> => {
     assertIsOnPlatform('setNavigationBarColor', ['android']);
     return ExpoSystemUI.setNavigationBarColor(color);
+  },
+  /**
+   * Gets the Android Navigation Bar color.
+   * @example
+   * ```typescript
+   * const color = await SystemUI.getNavigationBarColor();
+   * ```
+   */
+  getNavigationBarColor: (): Promise<ColorValue> => {
+    assertIsOnPlatform('getNavigationBarColor', ['android']);
+    return ExpoSystemUI.getNavigationBarColor();
+  },
+  /**
+   * Changes the Android Navigation Bar's Divider color.
+   * @example
+   * ```typescript
+   * SystemUI.setNavigationBarDividerColor("red");
+   * ```
+   */
+  setNavigationBarDividerColor: (color: ColorValue): Promise<void> => {
+    assertIsOnPlatform('setNavigationBarDividerColor', ['android']);
+    return ExpoSystemUI.setNavigationBarDividerColor(color);
+  },
+  /**
+   * Gets the Android Navigation Bar's Divider color.
+   * @example
+   * ```typescript
+   * const color = await SystemUI.getNavigationBarDividerColor();
+   * ```
+   */
+  getNavigationBarDividerColor: (): Promise<ColorValue> => {
+    assertIsOnPlatform('getNavigationBarDividerColor', ['android']);
+    return ExpoSystemUI.getNavigationBarDividerColor();
   },
   /**
    * Changes the Android Navigation Bar visibility.

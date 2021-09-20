@@ -7,11 +7,17 @@ import { Page, Section } from '../components/Page';
 export default function SystemUIScreen() {
   return (
     <Page>
-      <Section title="Set Navigation Bar Color">
+      <Section title="System UI Visibility">
+        <SetNavigationBarVisibilityExample />
+      </Section>
+      <Section title="Status Bar Color">
+        <SetStatusBarColorExample />
+      </Section>
+      <Section title="Navigation Bar Color">
         <SetNavigationBarColorExample />
       </Section>
-      <Section title="Set System UI Visibility">
-        <SetNavigationBarVisibilityExample />
+      <Section title="Navigation Bar Divider Color">
+        <SetNavigationBarDividerColorExample />
       </Section>
     </Page>
   );
@@ -35,7 +41,7 @@ function SetNavigationBarVisibilityExample() {
   return (
     <>
       <Text>Visibility: {value}</Text>
-      <Button onPress={onPress} title="Toggle Visibility" />
+      <Button onPress={onPress} title={value === 'hidden' ? 'Show System UI' : 'Hide System UI'} />
     </>
   );
 }
@@ -57,6 +63,32 @@ function SetNavigationBarColorExample() {
           SystemUI.setNavigationBarColor(getRandomColor());
         }}
         title="Set Navigation Bar to random color"
+      />
+    </>
+  );
+}
+
+function SetNavigationBarDividerColorExample() {
+  return (
+    <>
+      <Button
+        onPress={() => {
+          SystemUI.setNavigationBarDividerColor(getRandomColor());
+        }}
+        title="Set Navigation Bar Divider to random color"
+      />
+    </>
+  );
+}
+
+function SetStatusBarColorExample() {
+  return (
+    <>
+      <Button
+        onPress={() => {
+          SystemUI.setStatusBarColor(getRandomColor());
+        }}
+        title="Set Status Bar to random color"
       />
     </>
   );
